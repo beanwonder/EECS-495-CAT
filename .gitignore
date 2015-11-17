@@ -35,3 +35,7 @@ ompiled Object files
 *.exe
 *.out
 *.app
+
+#llvm
+*.bc
+
