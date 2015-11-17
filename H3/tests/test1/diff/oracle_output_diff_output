@@ -1,0 +1,165 @@
+1,20d0
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %10)
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %10)
+<    call void @CAT_binary_add(i8* %10, i8* %10, i8* %10)
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %10)
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %10)
+<    call void @CAT_binary_add(i8* %10, i8* %10, i8* %10)
+42a23
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+50a32
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+54a37
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+62a46
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+66a51
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+75a61
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+80a67,68
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+88a77,78
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+92a83,84
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+100a93,94
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+104a99
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+113a109
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+118a115,116
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+126a125,127
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+130a132,134
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+138a143,145
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+142a150,152
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+150a161,163
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+154a168,170
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+163a180,182
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+169c188,190
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+---
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+179c200,202
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+---
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+185,186c208,210
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+---
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+196,197c220,222
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+---
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+203,205c228,230
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %10)
+---
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+215,217c240,242
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %10)
+---
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+223,226c248,250
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %10)
+<    call void @CAT_binary_add(i8* %10, i8* %10, i8* %10)
+---
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+236,239c260,262
+<    %10 = call i8* @CAT_create_signed_value(i64 0)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+<    call void @CAT_binary_add(i8* %10, i8* %1, i8* %10)
+<    call void @CAT_binary_add(i8* %10, i8* %10, i8* %10)
+---
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+244a268,271
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+>    call void @CAT_binary_add(i8* %10, i8* %1, i8* %1)
+252a280,283
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+>    call void @CAT_binary_add(i8* %10, i8* %1, i8* %1)
+256a288,291
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+>    call void @CAT_binary_add(i8* %10, i8* %1, i8* %1)
+264a300,303
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+>    call void @CAT_binary_add(i8* %10, i8* %1, i8* %1)
+268a308,311
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+>    call void @CAT_binary_add(i8* %10, i8* %1, i8* %1)

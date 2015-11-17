@@ -1,0 +1,96 @@
+2c2
+< INSTRUCTION:     %1 = call i8* @CAT_create_signed_value(i64 5)
+---
+> INSTRUCTION:   %1 = call i8* @CAT_create_signed_value(i64 5)
+5c5
+<      %1 = call i8* @CAT_create_signed_value(i64 5)
+---
+>    %1 = call i8* @CAT_create_signed_value(i64 5)
+15c15
+< INSTRUCTION:     %2 = call i64 @CAT_get_signed_value(i8* %1)
+---
+> INSTRUCTION:   %2 = call i64 @CAT_get_signed_value(i8* %1)
+27c27
+< INSTRUCTION:     %3 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str, i32 0, i32 0), i64 %2)
+---
+> INSTRUCTION:   %3 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str, i32 0, i32 0), i64 %2)
+39c39
+< INSTRUCTION:     %4 = call i8* @CAT_create_signed_value(i64 8)
+---
+> INSTRUCTION:   %4 = call i8* @CAT_create_signed_value(i64 8)
+42c42
+<      %4 = call i8* @CAT_create_signed_value(i64 8)
+---
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+52c52
+< INSTRUCTION:     %5 = icmp sgt i32 %userInput, 10
+---
+> INSTRUCTION:   %5 = icmp sgt i32 %userInput, 10
+64c64
+< INSTRUCTION:     br i1 %5, label %6, label %7
+---
+> INSTRUCTION:   br i1 %5, label %6, label %7
+76c76
+< INSTRUCTION:     call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+---
+> INSTRUCTION:   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+79c79
+<      call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+---
+>    call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+84c84
+<      %4 = call i8* @CAT_create_signed_value(i64 8)
+---
+>    %4 = call i8* @CAT_create_signed_value(i64 8)
+90c90
+< INSTRUCTION:     br label %7
+---
+> INSTRUCTION:   br label %7
+102c102
+< INSTRUCTION:     %8 = call i64 @CAT_get_signed_value(i8* %4)
+---
+> INSTRUCTION:   %8 = call i64 @CAT_get_signed_value(i8* %4)
+114c114
+< INSTRUCTION:     %9 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.1, i32 0, i32 0), i64 %8)
+---
+> INSTRUCTION:   %9 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.1, i32 0, i32 0), i64 %8)
+126c126
+< INSTRUCTION:     %10 = call i8* @CAT_create_signed_value(i64 0)
+---
+> INSTRUCTION:   %10 = call i8* @CAT_create_signed_value(i64 0)
+129c129
+<      %10 = call i8* @CAT_create_signed_value(i64 0)
+---
+>    %10 = call i8* @CAT_create_signed_value(i64 0)
+139c139
+< INSTRUCTION:     call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+---
+> INSTRUCTION:   call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+142c142
+<      call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+---
+>    call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+147c147
+<      %10 = call i8* @CAT_create_signed_value(i64 0)
+---
+>    %10 = call i8* @CAT_create_signed_value(i64 0)
+153c153
+< INSTRUCTION:     %11 = call i64 @CAT_get_signed_value(i8* %10)
+---
+> INSTRUCTION:   %11 = call i64 @CAT_get_signed_value(i8* %10)
+165c165
+< INSTRUCTION:     %12 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([19 x i8], [19 x i8]* @.str.2, i32 0, i32 0), i64 %11)
+---
+> INSTRUCTION:   %12 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([19 x i8], [19 x i8]* @.str.2, i32 0, i32 0), i64 %11)
+177c177
+< INSTRUCTION:     ret void
+---
+> INSTRUCTION:   ret void
+190c190
+< INSTRUCTION:     call void @CAT_execution(i32 %argc)
+---
+> INSTRUCTION:   call void @CAT_execution(i32 %argc)
+202c202
+< INSTRUCTION:     ret i32 0
+---
+> INSTRUCTION:   ret i32 0

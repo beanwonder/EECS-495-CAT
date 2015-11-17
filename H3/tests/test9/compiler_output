@@ -1,0 +1,150 @@
+START FUNCTION: a_generic_C_function
+INSTRUCTION:   %1 = icmp sgt i32 %argc, 10
+***************** IN
+{
+}
+**************************************
+***************** OUT
+{
+}
+**************************************
+
+
+
+INSTRUCTION:   br i1 %1, label %2, label %4
+***************** IN
+{
+}
+**************************************
+***************** OUT
+{
+}
+**************************************
+
+
+
+INSTRUCTION:   %3 = call i8* @CAT_create_signed_value(i64 8)
+***************** IN
+{
+}
+**************************************
+***************** OUT
+{
+   %3 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+
+
+
+INSTRUCTION:   br label %4
+***************** IN
+{
+   %3 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+***************** OUT
+{
+   %3 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+
+
+
+INSTRUCTION:   %.0 = phi i8* [ %3, %2 ], [ %d1, %0 ]
+***************** IN
+{
+   %3 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+***************** OUT
+{
+   %3 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+
+
+
+INSTRUCTION:   %5 = call i64 @CAT_get_signed_value(i8* %.0)
+***************** IN
+{
+   %3 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+***************** OUT
+{
+   %3 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+
+
+
+INSTRUCTION:   %6 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.str, i32 0, i32 0), i64 %5)
+***************** IN
+{
+   %3 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+***************** OUT
+{
+   %3 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+
+
+
+INSTRUCTION:   ret void
+***************** IN
+{
+   %3 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+***************** OUT
+{
+   %3 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+
+
+
+START FUNCTION: main
+INSTRUCTION:   %1 = call i8* @CAT_create_signed_value(i64 5)
+***************** IN
+{
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+}
+**************************************
+
+
+
+INSTRUCTION:   call void @a_generic_C_function(i8* %1, i32 %argc)
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+}
+**************************************
+
+
+
+INSTRUCTION:   ret i32 0
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+}
+**************************************
+
+
+

@@ -1,0 +1,281 @@
+START FUNCTION: CAT_execution
+INSTRUCTION:   %1 = call i8* @CAT_create_signed_value(i64 5)
+***************** IN
+{
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+}
+**************************************
+
+
+
+INSTRUCTION:   %2 = call i64 @CAT_get_signed_value(i8* %1)
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+}
+**************************************
+
+
+
+INSTRUCTION:   %3 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str, i32 0, i32 0), i64 %2)
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+}
+**************************************
+
+
+
+INSTRUCTION:   %4 = call i8* @CAT_create_signed_value(i64 8)
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+
+
+
+INSTRUCTION:   %5 = icmp sgt i32 %userInput, 10
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+
+
+
+INSTRUCTION:   br i1 %5, label %6, label %7
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+
+
+
+INSTRUCTION:   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+}
+**************************************
+
+
+
+INSTRUCTION:   br label %7
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+}
+**************************************
+
+
+
+INSTRUCTION:   %8 = call i64 @CAT_get_signed_value(i8* %4)
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+}
+**************************************
+
+
+
+INSTRUCTION:   %9 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.1, i32 0, i32 0), i64 %8)
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+}
+**************************************
+
+
+
+INSTRUCTION:   %10 = call i8* @CAT_create_signed_value(i64 0)
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+   %10 = call i8* @CAT_create_signed_value(i64 0)
+}
+**************************************
+
+
+
+INSTRUCTION:   call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+   %10 = call i8* @CAT_create_signed_value(i64 0)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+   call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+}
+**************************************
+
+
+
+INSTRUCTION:   %11 = call i64 @CAT_get_signed_value(i8* %10)
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+   call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+   call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+}
+**************************************
+
+
+
+INSTRUCTION:   %12 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([19 x i8], [19 x i8]* @.str.2, i32 0, i32 0), i64 %11)
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+   call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+   call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+}
+**************************************
+
+
+
+INSTRUCTION:   ret void
+***************** IN
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+   call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+}
+**************************************
+***************** OUT
+{
+   %1 = call i8* @CAT_create_signed_value(i64 5)
+   %4 = call i8* @CAT_create_signed_value(i64 8)
+   call void @CAT_binary_add(i8* %4, i8* %4, i8* %4)
+   call void @CAT_binary_add(i8* %10, i8* %1, i8* %4)
+}
+**************************************
+
+
+
+START FUNCTION: main
+INSTRUCTION:   call void @CAT_execution(i32 %argc)
+***************** IN
+{
+}
+**************************************
+***************** OUT
+{
+}
+**************************************
+
+
+
+INSTRUCTION:   ret i32 0
+***************** IN
+{
+}
+**************************************
+***************** OUT
+{
+}
+**************************************
+
+
+

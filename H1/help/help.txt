@@ -1,0 +1,25 @@
+=== Help 1 
+Useful headers:
+#include "llvm/Pass.h"
+#include "llvm/IR/Module.h"
+#include "llvm/IR/Function.h"
+#include "llvm/IR/Instructions.h"
+#include "llvm/Support/raw_ostream.h"
+#include "llvm/Transforms/IPO/PassManagerBuilder.h"
+#include <iostream>
+#include <map>
+#include <vector>
+
+=== Help 2
+Function::getCalledFunction
+To access the function called by a call instruction.
+
+=== Help 3
+A map <StringRef, uint32_t> is useful to have a counter per StringRef (e.g., per function name).
+
+=== Help 4
+errs().write_escaped(stringToPrint);
+A useful way of printing a StringRef.
+
+=== From the assignment "H 0"
+To get the name of a function = Function::getName
