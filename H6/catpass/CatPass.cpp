@@ -75,6 +75,8 @@ namespace {
       auto first_intertion_pt = F.getEntryBlock().getFirstInsertionPt();
       std::map<Instruction *, Value *> fake_insts_to_arg;
       std::map<Value *, Instruction *> arg_to_fake_insts;
+      // a patch, to record mem escape vars
+      std::set<Value *> esc_vars;
       for (auto iter = F.arg_begin(); iter != F.arg_end(); ++iter) {
         Instruction *newInst = BinaryOperator::Create(Instruction::Add, zeroConst, 
                                                       zeroConst, "", first_intertion_pt);
@@ -105,12 +107,15 @@ namespace {
               //KILL_sets.back().insert(dyn_cast<Instruction>(I.getIncomingValue(0)));
               //KILL_sets.back().insert(dyn_cast<Instruction>(I.getIncomingValue(1)));
             } else if (isa<StoreInst>(&I)) {
-              //if (!isa<Argument>((dyn_cast<StoreInst>(&I))->getValueOperand())) {
+              if (!isa<Argument>((dyn_cast<StoreInst>(&I))->getValueOperand())) {
                 // KILL_sets.back().insert(dyn_cast<Instruction>((dyn_cast<StoreInst>(&I))->getValueOperand()));
                 // with more information depns later, no longer kill value operand anymore
                 // instead we gen store instruction
                 // do nothing
-              //} 
+                // record escape variables
+                //errs() << *(dyn_cast<StoreInst>(&I))->getValueOperand() << '\n';
+                esc_vars.insert((dyn_cast<StoreInst>(&I))->getValueOperand());
+              } 
             }
             continue;
           }         
@@ -241,10 +246,45 @@ namespace {
               CallInst *cinst;
               if (!setCalleeID(*iter, &id, &cinst)) {
                 if (isa<PHINode>(*iter)) {
+                  // phi node can have at least 2 operand
+                  // merge multiple reaching definition
+                  auto phi_node_ptr = dyn_cast<PHINode>(*iter);
+                  unsigned num_in_value = phi_node_ptr->getNumIncomingValues();
+                  unsigned count = 0;
+
+                  Value *first_val, *second_val;
+                  uint32_t first_id, second_id;
+                  CallInst *first_call_inst, *second_call_inst;
+                  while (count + 1 < num_in_value) {
+                    first_val = phi_node_ptr->getIncomingValue(count);
+                    second_val = phi_node_ptr->getIncomingValue(count + 1);
+                    if (auto first_inst = dyn_cast<Instruction>(first_val)) {
+                      if (auto second_inst = dyn_cast<Instruction>(second_val)) {
+                        if (setCalleeID(first_inst, &first_id, &first_call_inst) && setCalleeID(second_inst, &second_id, &second_call_inst)) {
+                          if (first_call_inst->getArgOperand(0) == second_call_inst->getArgOperand(0)) {
+                            reachingDef = first_inst;
+                          } else {
+                            reachingDef = NULL;
+                            break;
+                          }
+                        } else {
+                          reachingDef = NULL;
+                          break;
+                        }
+                      } else {
+                        reachingDef = NULL;
+                        break;
+                      }
+                    } else {
+                      reachingDef = NULL;
+                      break;
+                    }
+                  }
+
+                  /*
                   auto phiptr = dyn_cast<PHINode>(*iter);
                   auto leftv = phiptr->getIncomingValue(0);
                   auto rightv = phiptr->getIncomingValue(1);
-                  
                   uint32_t leftid, rightid;
                   CallInst *leftCallInst, *rightCallInst;
                   if (auto leftInst = dyn_cast<Instruction>(leftv)) {
@@ -259,7 +299,7 @@ namespace {
                     }
                   }
                   }
-
+                  */
                   continue;
                 }
                 if (isa<Argument>(var)) {
@@ -271,6 +311,7 @@ namespace {
                   continue;
                 };
               }
+
               switch (id) {
                 case CAT_create_signed_value_ID: {
                   if (var_inst == *iter) {
@@ -279,21 +320,27 @@ namespace {
                   break;
                 }
                 case CAT_binary_add_ID: {
+                  // binary_add first arg
                   auto a_def_var = cinst->getArgOperand(0);
                   if (var == a_def_var) {
                     reachingDef = NULL;
                     done = true;
                   } else {
-                    auto deps_ptr = deps.depends(*iter, var_inst, false);
-                    if (deps_ptr != NULL) {
-                      if (deps_ptr->isOrdered()) {
-                        reachingDef = NULL;
-                        done = true;
+                    if (esc_vars.find(var) != esc_vars.end()) {
+                      auto deps_ptr = deps.depends(dyn_cast<Instruction>(a_def_var), var_inst, false);
+                      if (deps_ptr != NULL) {
+                        //errs() << *deps_ptr->getSrc() << *deps_ptr->getDst() << '\n';
+                        if (deps_ptr->isOrdered()) {
+                          reachingDef = NULL;
+                          done = true;
+                        } else {
+                         // input deps, do nothing
+                        }
                       } else {
-                        // input deps, do nothing
+                        // no depends, do nothing
                       }
                     } else {
-                      // no depends, do nothing
+                      // if var not escape memory, never data check deps
                     }
                   }
                   break;
