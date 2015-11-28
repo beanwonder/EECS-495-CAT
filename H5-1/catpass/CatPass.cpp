@@ -231,36 +231,45 @@ namespace {
               uint32_t id;
               CallInst *cinst;
               if (!setCalleeID(*iter, &id, &cinst)) {
-                if (isa<Argument>(var)) {
+                if (fake_insts_to_arg.find(*iter) != fake_insts_to_arg.end()) {
+                  // if iter is fake_instruction
+                  //errs() << "i am fake inst\n";
                   if (fake_insts_to_arg[*iter] == var) {
+                    //errs() << "i am killing var\n";
                     reachingDef = NULL;
                     break;
+                  } else {
+                    // not match
+                    // do nothing
+                    continue;
                   }
                 } else {
                   continue;
-                };
-              }
-              switch (id) {
-                case CAT_create_signed_value_ID: {
-                  if (var_inst == *iter) {
-                    reachingDef = *iter;
+                }
+
+              } else {
+                switch (id) {
+                  case CAT_create_signed_value_ID: {
+                    if (var_inst == *iter) {
+                      reachingDef = *iter;
+                    }
+                    break;
                   }
-                  break;
-                }
-                case CAT_binary_add_ID: {
-                  if (var == cinst->getArgOperand(0)) {
-                    reachingDef = NULL;
-                    done = true;
+                  case CAT_binary_add_ID: {
+                    if (var == cinst->getArgOperand(0)) {
+                      reachingDef = NULL;
+                      done = true;
+                    }
+                    break;
                   }
-                  break;
+                  case CAT_get_signed_value_ID: {
+                    break;
+                  }
                 }
-                case CAT_get_signed_value_ID: {
+                if (done) {
                   break;
-                }
-              }
-              if (done) {
-                break;
-              }    
+                }  
+              }  
             }
             // constant propagate
             //int64_t c;

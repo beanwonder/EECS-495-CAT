@@ -16,6 +16,7 @@
 #include "llvm/Pass.h"
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Transforms/Utils/BasicBlockUtils.h"
+#include "llvm/Support/Debug.h"
 #include <iostream>
 #include <map>
 #include <vector>
@@ -56,6 +57,7 @@ namespace {
         errs() << "CAT ERROR CAT Function coudln't be found\n";
         abort();
       }
+
       return isFound;
     }
     // This function is invoked once per function compiled
@@ -63,6 +65,7 @@ namespace {
     virtual bool runOnFunction(Function &F) {
       //errs() << "Hello LLVM World at \"getAnalysisUsage\"\n" ;
       // Instruction are 
+      // errs() << "here" << '\n';
       std::vector<Instruction *> inst_index;
       std::vector<std::set<Instruction *>> GEN_sets;
       std::vector<std::set<Instruction *>> KILL_sets;
@@ -80,10 +83,10 @@ namespace {
         arg_to_fake_insts[iter] = newInst;
       }
 
+
       for (auto &B : F) {
         for (auto &I : B) {        
           // interate over instructions in a basic block
-          //errs() << I << '\n';
           CallInst *callInst;
           uint32_t calleeID;
           // whether is a cat function call
@@ -92,23 +95,36 @@ namespace {
           inst_index.push_back(&I);          
           GEN_sets.push_back(std::set<Instruction *>());
           KILL_sets.push_back(std::set<Instruction *>());
+          //DEBUG_WITH_TYPE("store", errs() << "I am here!\n");
 
           // KILL AND GENS
+      
           if (!setCalleeID(&I, &calleeID, &callInst)) {
             if (fake_insts_to_arg.find(&I) != fake_insts_to_arg.end()) {
               GEN_sets.back().insert(&I);
             } else if (isa<PHINode>(&I)) {
+
               GEN_sets.back().insert(&I);
+              // errs() << "isa phi" << I << '\n';
               //dyn_cast<StoreInst>(&I);
               //KILL_sets.back().insert(dyn_cast<Instruction>(I.getIncomingValue(0)));
               //KILL_sets.back().insert(dyn_cast<Instruction>(I.getIncomingValue(1)));
             } else if (isa<StoreInst>(&I)) {
-              if (!isa<Argument>((dyn_cast<StoreInst>(&I))->getValueOperand())) {
-                KILL_sets.back().insert(dyn_cast<Instruction>((dyn_cast<StoreInst>(&I))->getValueOperand()));     
-              } 
+              //errs() << "here" << '\n';
+              
+              auto sto_inst = dyn_cast<StoreInst>(&I);
+              auto sto_val = dyn_cast<StoreInst>(&I)->getValueOperand();
+              //auto sto_inst = dyn_cast<StoreInst>(&I);
+              //errs() << *sto_val << '\n';
+              if (!isa<Argument>(sto_val)) {
+                auto to_insert = dyn_cast<Instruction>(sto_val);
+                KILL_sets.back().insert(to_insert);     
+              }
             }
+
             continue;
-          }         
+          }    
+
           // normal GEN KILL SETS
           // if not a CAT_function no GEN KILL
           // whether has fucntion argument in add first operand
@@ -169,6 +185,7 @@ namespace {
         OUT_sets.push_back(std::set<Instruction *>());
       }
       // compute IN and OUT set for each instruciton
+
       bool is_changed;
       do
       {
@@ -219,16 +236,21 @@ namespace {
       } while (is_changed);
 
       // reaching definition
+
       for (int idx = 0; idx < inst_index.size(); ++idx) {
         Instruction *inst = inst_index[idx];
         uint32_t callid;
         CallInst *callinst;
         if (setCalleeID(inst, &callid, &callinst)) {
           if (callid == CAT_get_signed_value_ID) {
+
             Value *var = callinst->getArgOperand(0);
             Instruction *var_inst = dyn_cast<Instruction>(var);
-            std::set<Instruction *> IN = IN_sets[idx];
+            std::set<Instruction *> &IN = IN_sets[idx];
             Instruction *reachingDef = NULL;
+            // errs() << *inst << '\n';
+            // errs() << *var << '\n';
+
             // check IN set elements
             for (std::set<Instruction *>::iterator iter = IN.begin(); iter != IN.end(); ++iter) {
               bool done = false;
@@ -236,58 +258,115 @@ namespace {
               CallInst *cinst;
               if (!setCalleeID(*iter, &id, &cinst)) {
                 if (isa<PHINode>(*iter)) {
+                  
+                  auto phi_node_ptr = dyn_cast<PHINode>(*iter);
+
+                  unsigned num_in_value = phi_node_ptr->getNumIncomingValues();
+                  unsigned count = 0;
+
+                  Value *first_val, *second_val;
+                  uint32_t first_id, second_id;
+                  CallInst *first_call_inst, *second_call_inst;
+                  while (count + 1 < num_in_value) {
+                    first_val = phi_node_ptr->getIncomingValue(count);
+                    second_val = phi_node_ptr->getIncomingValue(count + 1);
+                    if (auto first_inst = dyn_cast<Instruction>(first_val)) {
+                      if (auto second_inst = dyn_cast<Instruction>(second_val)) {
+                        if (setCalleeID(first_inst, &first_id, &first_call_inst) && setCalleeID(second_inst, &second_id, &second_call_inst)) {
+                          if (first_id == CAT_create_signed_value_ID && second_id == CAT_create_signed_value_ID) {
+                            if (first_call_inst->getArgOperand(0) == second_call_inst->getArgOperand(0)) {
+                             reachingDef = first_inst;
+                             ++count;
+                            } else {
+                              reachingDef = NULL;
+                              break;
+                            }
+                          } else {
+                            reachingDef = NULL;
+                            break;
+                          }
+                        } else {
+                          reachingDef = NULL;
+                          break;
+                        }
+                      } else {
+                        reachingDef = NULL;
+                        break;
+                      }
+                    } else {
+                      reachingDef = NULL;
+                      break;
+                    }
+                  }
+                  
+                  /*
                   auto phiptr = dyn_cast<PHINode>(*iter);
+                  unsigned num_in_value = phiptr->getNumIncomingValues();
+                  errs() << "phi: " << num_in_value << '\n';
                   auto leftv = phiptr->getIncomingValue(0);
                   auto rightv = phiptr->getIncomingValue(1);
-                  
                   uint32_t leftid, rightid;
                   CallInst *leftCallInst, *rightCallInst;
                   if (auto leftInst = dyn_cast<Instruction>(leftv)) {
                     if (auto rightInst = dyn_cast<Instruction>(rightv)) {
-                    if (setCalleeID(leftInst, &leftid, &leftCallInst) && setCalleeID(rightInst, &rightid, &rightCallInst)) {
-                      if (leftid == CAT_create_signed_value_ID && rightid == CAT_create_signed_value_ID) {
-                        if (leftCallInst->getArgOperand(0) == rightCallInst->getArgOperand(0)) {
-                          reachingDef = leftInst;
-                          break;
+                      if (setCalleeID(leftInst, &leftid, &leftCallInst) && setCalleeID(rightInst, &rightid, &rightCallInst)) {
+                        if (leftid == CAT_create_signed_value_ID && rightid == CAT_create_signed_value_ID) {
+                          if (leftCallInst->getArgOperand(0) == rightCallInst->getArgOperand(0)) {
+                            reachingDef = leftInst;
+                            break;
+                          }
                         }
                       }
                     }
                   }
-                  }
-
+                  */
                   continue;
-                }
-                if (isa<Argument>(var)) {
+                } else if (fake_insts_to_arg.find(*iter) != fake_insts_to_arg.end()) {
+                  // if iter is fake_instruction
+                  //errs() << "i am fake inst\n";
                   if (fake_insts_to_arg[*iter] == var) {
+                    //errs() << "i am killing var\n";
                     reachingDef = NULL;
                     break;
+                  } else {
+                    // not match
+                    // do nothing
+                    continue;
                   }
                 } else {
+                  // in instruction neither fake_inst nor phi node 
+                  //errs() << "neither \n"; 
+                  //errs() << *iter << '\n';
                   continue;
-                };
-              }
-              switch (id) {
-                case CAT_create_signed_value_ID: {
-                  if (var_inst == *iter) {
-                    reachingDef = *iter;
+                }
+                //errs() << "i am here\n";
+              } else {
+                // if is CAT funcions
+                switch (id) {
+                  case CAT_create_signed_value_ID: {
+                    if (var_inst == *iter) {
+                      reachingDef = *iter;
+                    }
+                    break;
                   }
-                  break;
-                }
-                case CAT_binary_add_ID: {
-                  if (var == cinst->getArgOperand(0)) {
-                    reachingDef = NULL;
-                    done = true;
+                  case CAT_binary_add_ID: {
+                    if (var == cinst->getArgOperand(0)) {
+                      reachingDef = NULL;
+                      done = true;
+                    }
+                    break;
                   }
-                  break;
+                  case CAT_get_signed_value_ID: {
+                    break;
+                  }
                 }
-                case CAT_get_signed_value_ID: {
+
+                if (done) {
                   break;
-                }
-              }
-              if (done) {
-                break;
-              }    
+                }  
+              }  
             }
+
             // constant propagate
             //int64_t c;
             if (reachingDef != NULL) {
